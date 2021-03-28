@@ -97,8 +97,10 @@
               <h2>{{list.explnation}}</h2>
               <p><strong>Category:</strong> {{list.Category}}</p>
               <p><strong>Starting Price:</strong> {{list.price}} AED</p>
+              <!--Check if the starting price is equal the bid, this means that no bid yet on this item-->
               {% if list.price == list.bid %}
               <p>No bid yet ! Be the First.</p>
+              <!--else if there is a bid then put it-->
               {% else %}
               <p><strong>Current Bid:</strong> {{list.bid}} AED</p>
               {% endif %}
