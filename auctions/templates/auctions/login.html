@@ -1,0 +1,103 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<style type="text/css">
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@300&display=swap');
+    body{
+        padding: 0;
+        font-family: 'Fraunces', serif;
+        background-repeat: no-repeat;
+        background-size: cover;
+        font-weight: bold;
+    }
+    .wrapper{
+        background-color: rgba(196, 190, 190, 0.521);
+        width: 800px; 
+        height: 340px; 
+        position: absolute;
+        top: 35%; 
+        left: 20%;
+        transform: translate((-50% , -50%));
+    }
+    .wrapper::before{
+        content: '';
+        width: 350px;
+        height: 342px;
+        background-color: rgba(0, 0,0, 0.5);
+        position: absolute;
+    }
+    #header1{
+        margin-right: 8em;
+        margin-bottom: 0em;
+    }
+   .form-area{
+    position: absolute;
+    top: 50%;
+    left: 70%;
+    transform: translate(-50% , -50%);
+    width: 350px;
+    overflow: hidden;
+}
+.form-area input{
+    outline: none;
+    border:  1px solid rgba(0, 0, 0, 0);
+    border-bottom-color: #262626;
+    background: transparent;
+    height: 38px;
+}
+.form-area i {
+    position: relative;
+    margin-top: 15px;
+}
+::placeholder{
+    color: black;
+}
+.header-area h2{
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        transform: translate(-50% , -50%);
+        width: 25%;
+        border: 12px inset rgb(125, 157, 161);
+        padding: 5px;
+        font-size: 40px;
+        text-align: center;
+        color: #fff;
+    }
+    .header-area p {
+        position: absolute;
+        top: 50%;
+        left: 20%;
+        transform: translate(-50% , -50%);
+        color: #fff;
+    }
+    .mes{
+        text-align: center;
+        margin-top: 4em;
+        margin-left: 19em;
+    }
+</style>
+<div class="wrapper">
+ <div class="header-area">
+    <h2> Loksha's Auction</h2>
+    <p> Don't have an account? <a href="{% url 'register' %}">Register here.</a></p>
+ </div>
+    {% if message %}
+        <div class="mes">{{ message }}</div>
+    {% endif %}
+    <div class="form-area">
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input autofocus class="form-control" type="text" name="username" placeholder="Username">
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="password" name="password" placeholder="Password">
+        </div>
+        <input class="btn btn-light" type="submit" value="Login">
+    </form>
+    </div>
+    </div>
+
+
+{% endblock %}

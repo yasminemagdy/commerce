@@ -1,0 +1,76 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+{% endblock %}
+<h2>Closed Listings</h2>
+{% block body %}
+<style type="text/css" scoped>
+    .container{
+      background-color: white;
+      height: 327px;
+      width: 990px;
+      margin: 50px auto;
+      border-radius: 7px 7px 7px 7px;
+      box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
+    }
+    .pro-img img{
+      float: left;
+      height: 327px;
+      width: 327px;
+      border-radius: 0 7px 10px 7px;
+      background-color: #ffffff;
+      margin-right: 1em;
+    }
+    .pro-text{
+      height: 300px;
+    }
+    .pro-text h1{
+      margin: 0 0 8px 38px;
+      padding-top: 20px;
+      font-size: 34px;
+      color: #474747;
+    }
+    .pro-text h2{
+      margin: 0 0 17px 38px;
+      font-size: 13px;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-weight: 400;
+      text-transform: uppercase;
+      color: #d2d2d2;
+    }
+    .pro-text p {
+      margin: 0 0 0 38px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      color: #8d8d8d;
+      line-height: 1.7em;
+      font-size: 15px;
+      font-weight: lighter;
+      overflow: hidden;
+    }
+    </style>
+    {% for lists in list %}
+    <!--if the holder close the auction-->
+    {% if lists.close %}
+    <!--if the user is the winner , then dispaly this message-->
+    {% if user.username == lists.bidder %}
+    <h3 style="color:rgb(36, 6, 3); text-align: center; margin: 2em;">CONGRATULATIONS <strong style="color:rgb(48, 8, 3);">{{lists.bidder}}</strong> ! YOU'VE WON THIS AUCTION </h3>
+    {% endif %}
+    {% endif %}
+
+    <div class="container">
+           <div class="pro-img">
+                <img class="image" src="{{lists.link}}">
+            </div>
+            <div class="pro-info">
+                <div class="pro-text">
+                    <h1>{{ lists.title }}</h1>
+                    <h2>The auction has been closed by Price : {{lists.bid}}AED From {{lists.bidder}} </h2>
+                    <p>{{ lists.explnation }}</p>
+                    <p><strong>Category:</strong> {{lists.Category}}</p>
+                    <p> <strong>Created On:</strong> {{ lists.time }}</p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}

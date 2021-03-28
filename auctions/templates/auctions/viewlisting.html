@@ -1,0 +1,187 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+    {{ listings.title }}
+{% endblock %}
+
+{% block body %}
+<style type="text/css">
+.container{
+  background-color: white;
+  height: max-content;
+  width: 990px;
+  margin: 50px auto;
+  border-radius: 7px 7px 7px 7px;
+  box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
+}
+.pro-img img{
+  height: auto;
+  float: left;
+  width: 357px;
+  border-radius: 0 7px 10px 7px;
+  background-color: #ffffff;
+  margin-right: 1em;
+}
+.pro-text{
+  height: 400px;
+}
+.pro-text h1{
+  margin: 0 0 8px 38px;
+  padding-top: 20px;
+  font-size: 34px;
+  color: #474747;
+}
+.pro-text h2{
+  margin: 0 0 17px 38px;
+  font-size: 13px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: #d2d2d2;
+}
+.pro-text p {
+  margin: 0 0 0 38px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: #8d8d8d;
+  line-height: 1.7em;
+  font-size: 15px;
+  font-weight: lighter;
+  overflow: hidden;
+}
+.pro-btn{
+  margin-top: 1em;
+  height: 103px;
+  position: relative;
+}
+.pro-btn input{
+  display: inline-block;
+  height: 50px;
+  width: 176px;
+  box-sizing: border-box;
+  border: transparent;
+  border-radius: 60px;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #ffffff;
+  background-color: #9cebd5;
+  cursor: pointer;
+  outline: none;
+}
+.pro-btn input:hover{
+  background-color: #79b0a1;
+}
+.form-control{
+  width: 200px;
+}
+</style>
+<div class="container">
+    <div class="pro-img">
+        <img src="{{ listings.link }}">     
+   </div>
+   <div class="pro-info">
+       <div class="pro-text">
+        <h1>{{ listings.title }}</h1>
+        <h2><strong>Description: </strong>{{ listings.explnation }}</h2>
+        <p><strong>Current bid:</strong> {{ listings.bid }} AED</p> 
+        <p><strong>Listed by:</strong> {{ listings.holder }} </p>
+        <p><strong>Created on:</strong> {{ listings.time }} </p>
+        <p><strong>Starting price:</strong> {{listings.price}} AED</p>
+    </div>
+       <div class="creating-bid">
+        <!--if user is signed in -->
+        {% if user.is_authenticated %}
+         <!--if user isn't the holder-->
+         {% if user.username != listings.holder %}
+         <!-- UPDATE BID -->
+         <form action="{% url 'create_bid' listings.id %}" method="POST">  
+            {% csrf_token %}
+                <div>
+                    <input type="number" class="form-control" min="{{ minimum }}" max="999999" name="bid" placeholder="Your Bid" required/>
+                </div>
+            </div>
+            <input type="number" hidden name="user_id" value="{{ user.id }}">
+            <div class="pro-btn">
+                <input type="submit" value="Create Bid">
+            </div>
+         </form>   
+        {% endif %}
+    </div>
+    <div class="Washlist">
+        {% if user.username == listings.holder %} 
+          <form action="{% url 'close' %}" method="POST"> 
+              {% csrf_token %}
+              <input hidden type="number" name="listing_id" value="{{ listings.id }}">
+              <div class="pro-btn">
+                <input type="submit" value="Close Listing">
+              </div>
+          </form>
+  
+        {% else %}
+  
+          {% for watch in watchlist %}
+  
+              <!-- IF LISTING HAS THE SAME LISTING IN WATCHLIST -->
+              {% if listings.id == watch.watchlist %} 
+                  
+                  <form action="{% url 'remove' %}" method="POST"> 
+                  {% csrf_token %}
+                      <input hidden type="number" name="remove-it" value="{{ listings.id }}">
+                      <div class="pro-btn">
+                        <input type="submit" value="Remove From 🤍">
+                      </div>
+                  </form>
+  
+              {% endif %}
+  
+          {% empty %} <!--ELSE-->
+  
+              <form action="{% url 'watchlist' %}" method="POST"> 
+              {% csrf_token %}
+                  <input hidden type="number" name="add-id" value="{{ listings.id }}">
+                  <div class="pro-btn">
+                    <input type="submit" value="Add to 🤍">
+                  </div>
+              </form>
+  
+          {% endfor %}
+      {% endif %}
+    </div>
+    {% endif %}
+    <div class="comments"> 
+         <!--if user is signed in-->
+         {% if user.is_authenticated %}
+        <h2>Comments</h2>
+        <div>
+            {% for comment in comments %}
+                <div>
+                    <h6>
+                        by :{{ comment.user }}
+                    </h6>
+                    <p>
+                        {{ comment.comment }}
+                    </p>
+                </div>
+                <hr>
+                {% empty %}
+                <p>No comments Yet !</p>
+            {% endfor %}
+        </div>
+        <!--if user isn't the holder so he can comment-->
+        {% if user.username != listings.holder %}
+        <form action="{% url 'addcomment' listings.id %}" method="POST"> 
+            {% csrf_token %}
+                <div>
+                    <input class="form-control" type="text" name="comment" placeholder="Add comment">
+                </div>
+            <div class="pro-btn">
+                <input  type="submit" value="Add Comment">
+            </div>
+        </form>
+        {% endif %}
+        {% endif %}
+   </div>   
+</div> 
+</div>
+{% endblock %}

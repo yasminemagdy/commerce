@@ -1,0 +1,119 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+
+<style type="text/css" scoped>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@300&display=swap');
+    body{
+        margin: 0;
+        padding: 0;
+        font-family: 'Fraunces', serif;
+        background-repeat: no-repeat;
+        background-size: cover;
+        font-weight: bold;
+        
+    
+    }
+    .wrapper{
+        background-color: rgba(196, 190, 190, 0.521);
+        width: 800px; 
+        height: 480px; 
+        position: absolute;
+        top: 30%; 
+        left: 20%;
+        transform: translate((-50% , -50%));
+    }
+    .wrapper::before{
+        content: '';
+        width: 350px;
+        height: 480px;
+        background-color: rgba(0, 0,0, 0.5);
+        position: absolute;
+    }
+    .header-area h2{
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        transform: translate(-50% , -50%);
+        width: 25%;
+        border: 12px inset rgb(125, 157, 161);
+        padding: 5px;
+        font-size: 40px;
+        text-align: center;
+        color: #fff;
+    }
+    .header-area p {
+        position: absolute;
+        top: 50%;
+        left: 20%;
+        transform: translate(-50% , -50%);
+        color: #fff;
+    }
+    .form-area{
+        position: absolute;
+        top: 50%;
+        left: 70%;
+        transform: translate(-50% , -50%);
+        width: 350px;
+        overflow: hidden;
+    }
+    .form-area input{
+        outline: none;
+        border:  1px solid rgba(0, 0, 0, 0);
+        border-bottom-color: #262626;
+        background: transparent;
+        height: 38px;
+    }
+    .form-area i {
+        position: relative;
+        margin-top: 15px;
+    }
+    ::placeholder{
+        color: black;
+    }
+    #header1{
+        margin-right: 15em;
+    }
+</style>
+
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+    <div class="wrapper">
+        <div class="header-area">
+            <h2> Loksha's Auction</h2>
+            <!--if the user is already signed in , then he can be redirected to login page -->
+            <p>Create an account to join ! Or <a href="{% url 'login' %}">Log In here.</a></p>
+        </div>
+    <!--User filled the information to register-->
+    <div class="form-area">
+    <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        <i class="fa fa-user-circle-o">
+            <input type="text" name="username" placeholder=" Enter Username" required>
+        </i>
+        <i class="fa fa-user">
+            <input autofocus type="text" name="first_name" placeholder="First_Name" required>
+        </i>
+        <i class="fa fa-user">
+            <input  autofocus type="text" name="last_name" placeholder="Last_Name" required>
+        </i>
+        <i class="fa fa-envelope-o">
+            <input type="email" name="email" placeholder="Email Address" required>
+        </i>
+        <i class="fa fa-key">
+            <input type="password" name="password" placeholder="Password" required>
+        </i>
+        <i class="fa fa-key">
+            <input type="password" name="confirmation" placeholder="Confirm Password" required>
+        </i><br>
+        <i class="fa fa-map-marker">
+            <input type="text" name="address" placeholder="Country , Region" required>
+        </i><br>
+        <i class="fa fa-phone">
+            <input  type="text" name="phone" placeholder="Phone Number" required>
+        </i><br>
+        <input class="btn btn-light" type="submit" value="Sign Up" style="float: right; margin-bottom: 2em;">
+    </form>
+    </div>
+</div>
+{% endblock %}

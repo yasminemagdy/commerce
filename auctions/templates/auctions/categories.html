@@ -1,0 +1,46 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+    Categories
+{% endblock %}
+
+{% block body %}
+<style type="text/css">
+body{
+    background-size: cover;
+}
+    a{
+        text-decoration: none;
+        font-style: italic;
+        float: left;
+        margin:1em;
+        color: rgb(4, 37, 37);
+        
+    }
+    h2{
+        color: black;
+    }
+    ul{
+        margin-bottom: 3em;
+    }
+    ul li a{
+        margin: 0em;
+        top: 0;
+    }
+
+</style>
+    <div>
+        <h2 style="padding-top: 94px;">All Categories</h2>
+    </div>
+    <hr>
+    <div>
+    {% for category in categories %} <!--LOOP ALL CATEGORIES-->
+    
+        <h4>
+            <a class="fontsize" href="{% url 'category' category.id %}">{{ category }}</a>
+        </h4>
+
+    {% endfor %}
+    </div>
+
+{% endblock %}

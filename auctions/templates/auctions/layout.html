@@ -1,0 +1,136 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" style="background: linear-gradient(to right, #f0c27b, #4b1248);">
+    <head>
+        <title> {% block title %} Auctions {% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+       
+    </head>
+    <body style="background: transparent;">
+        <ul id="header1">
+            <li>
+            <a href="{% url 'index' %}" class="active" style="text-decoration: none; text-align: center; float: right;">
+            <div class="icon">
+                <i class="fa fa-home" aria-hidden="true"></i>
+                <i class="fa fa-home" aria-hidden="true"></i>
+
+            </div>
+            <div class="name" id="home"><span data-text="Home">Active Items</span></div>
+            </a>
+            </li>
+            {% if user.is_authenticated %}
+            <li>
+            <a href="{% url 'create' %}" class="active" style="text-decoration: none;">
+                <div class="icon">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+
+                </div>
+                <div class="name" id="create"><span data-text="Create Item">Create Item</span></div>
+                </a>
+                </li>
+                {% endif %}
+                <li>
+            <a href="{% url 'categories' %}" class="active" style="text-decoration: none;">
+            <div class="icon">
+                <i class="fa fa-list" aria-hidden="true"></i>
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </div>
+            <div class="name" id="categories"><span data-text="categories">Categories</span></div>
+            </a>
+            </li>
+            <li>
+            <a href="{% url 'close' %}" class="active" style="text-decoration: none;">
+                <div class="icon">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                    <i class="fa fa-times" aria-hidden="true"></i>
+
+                </div>
+                <div class="name" id="close"><span data-text="Sold Out"> Sold Out !</span></div>
+                </a>
+                </li>
+                {% if user.is_authenticated %}
+                <li>
+             <a href="{% url 'watchlist' %}" class="active" style="text-decoration: none;">
+            <div class="icon">
+                <i class="fa fa-heart" aria-hidden="true"></i>
+                <i class="fa fa-heart" aria-hidden="true"></i>
+
+            </div>
+            <div class="name" id="watchlist"><span data-text="watchlist"> watchlist</span></div>
+            </a>
+            </li>
+            {% endif %}
+            {% if not user.is_authenticated %}
+            <li>
+            <a href="{% url 'login' %}" class="active" style="text-decoration: none;">
+                <div class="icon">
+                    <i class="fa fa-sign-in" aria-hidden="true"></i>
+                    <i class="fa fa-sign-in" aria-hidden="true"></i>
+
+                </div>
+                <div class="name" id="login"><span data-text="login"> Log In</span></div>
+                </a>
+                </li>
+                {% endif %}
+                {% if user.is_authenticated %}
+                <li>
+            <a href="{% url 'logout' %}" class="active" style="text-decoration: none;">
+            <div class="icon">
+                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                <i class="fa fa-sign-out" aria-hidden="true"></i>
+
+            </div>
+            <div class="name" id="logout"><span data-text="logout"> Log Out</span></div>
+            </a>
+            </li>
+            {% endif %}
+            <li>
+            <a href="{% url 'register' %}" class="active" style="text-decoration: none;">
+                <div class="icon">
+                    <i class="fa fa-user-plus" aria-hidden="true"></i>
+                    <i class="fa fa-user-plus" aria-hidden="true"></i>
+
+                </div>
+                <div class="name" id="register"><span data-text="register"> Register</span></div>
+                </a>
+            </li>
+            
+           <!-- <li>
+                <a href="{% url 'create' %}" class="active">Create Listing</a>
+            </li>
+            <li>
+                <a  href="{% url 'categories' %}" class="active">Categories</a>
+            </li>
+            {% if user.is_authenticated %}
+            <li >
+                <a href="{% url 'close' %}" class="active">Closed Listing</a>
+            </li>
+            {% endif %}
+            {% if user.is_authenticated %}
+
+            <li >   
+                <a href="{% url 'watchlist'%}" class="active">Watchlist</a>
+            </li>
+            {% endif %}
+            {% if user.is_authenticated %}
+                <li>
+                    <a  href="{% url 'logout' %}" class="active">Log Out</a>
+                </li>
+               
+            {% else %}
+                <li>
+                    <a  href="{% url 'login' %}" class="active">Log In</a>
+                </li>
+                <li>
+                    <a href="{% url 'register' %}" class="active">Register</a>
+                </li>
+            {% endif %}-->
+        </ul>
+        {% block body %}
+        {% endblock %}
+    </body>
+</html>
