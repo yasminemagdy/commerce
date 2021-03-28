@@ -82,6 +82,7 @@
    </div>
    <div class="pro-info">
        <div class="pro-text">
+         <!--Display all details about the item-->
         <h1>{{ listings.title }}</h1>
         <h2><strong>Description: </strong>{{ listings.explnation }}</h2>
         <p><strong>Current bid:</strong> {{ listings.bid }} AED</p> 
@@ -109,6 +110,7 @@
         {% endif %}
     </div>
     <div class="Washlist">
+      <!--If the user is the holder, then he can close the auction on his item-->
         {% if user.username == listings.holder %} 
           <form action="{% url 'close' %}" method="POST"> 
               {% csrf_token %}
@@ -117,12 +119,12 @@
                 <input type="submit" value="Close Listing">
               </div>
           </form>
-  
+         <!--else if the user is a regular user, then he can add or remove the item from the watchlist-->
         {% else %}
   
           {% for watch in watchlist %}
   
-              <!-- IF LISTING HAS THE SAME LISTING IN WATCHLIST -->
+              <!-- If the item is already in the watchist, then the user has the ability to remove it -->
               {% if listings.id == watch.watchlist %} 
                   
                   <form action="{% url 'remove' %}" method="POST"> 
@@ -135,7 +137,7 @@
   
               {% endif %}
   
-          {% empty %} <!--ELSE-->
+          {% empty %} <!--Else if it is not on the watchlist then the user have the ability to add it-->
   
               <form action="{% url 'watchlist' %}" method="POST"> 
               {% csrf_token %}
@@ -168,7 +170,7 @@
                 <p>No comments Yet !</p>
             {% endfor %}
         </div>
-        <!--if user isn't the holder so he can comment-->
+        <!--if the user isn't the holder so the user have the ability to comment-->
         {% if user.username != listings.holder %}
         <form action="{% url 'addcomment' listings.id %}" method="POST"> 
             {% csrf_token %}
