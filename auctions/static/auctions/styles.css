@@ -7,7 +7,7 @@ body{
     display: flex;
     flex-wrap: wrap;
     border-radius: 10px;
-    width: 100px;
+    width: max-content;
     background-size: cover;
     margin-bottom: 2em;
     padding-bottom: 12px;
